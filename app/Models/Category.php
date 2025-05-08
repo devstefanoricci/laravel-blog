@@ -14,8 +14,10 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
+        
+
     ];
-    
+
     protected $casts = [
         'deleted_at' => 'datetime',
     ];

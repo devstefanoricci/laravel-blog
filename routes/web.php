@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -32,4 +33,33 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-Route::resource('Pippo', PippoController::class);
+
+Route::prefix('posts')->group(function () {
+    Route::get('/index',  [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+    Route::get('/create',  [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts',  [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
+    Route::get('/{id}',  [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+    Route::get('/{id}/edit',  [App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/{id}',  [App\Http\Controllers\PostController::class, 'update'])->name('posts.update');
+    Route::delete('/{id}',  [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
+});
+
+Route::prefix('categories')->group(function () {
+    Route::get('/index',  [App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/create',  [App\Http\Controllers\CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories',  [App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/{id}',  [App\Http\Controllers\CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/{id}/edit',  [App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/{id}',  [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/{id}',  [App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
+});
+
+Route::prefix('comments')->group(function () {
+    Route::get('/index',  [App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+    Route::get('/create',  [App\Http\Controllers\CommentController::class, 'create'])->name('comments.create');
+    Route::post('/comments',  [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+    Route::get('/{id}',  [App\Http\Controllers\CommentController::class, 'show'])->name('comments.show');
+    Route::get('/{id}/edit',  [App\Http\Controllers\CommentController::class, 'edit'])->name('comments.edit');
+    Route::put('/{id}',  [App\Http\Controllers\CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/{id}',  [App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
+});
