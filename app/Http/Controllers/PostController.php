@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = \App\Models\Post::with('user','category','comments')->paginate(10);
+        $posts = Post::with('user','category','comments')->paginate(10);
+        //return $posts;
         return view('posts.index', ['posts' => $posts]);
 
     }
@@ -22,9 +24,31 @@ class PostController extends Controller
 
     }
 
+    public function create()
+    {
+        $categories = Category::all();
+        return view('posts.create', ['categories' => $categories]);
+    }
+
+
     public function store(Request $request)
     {
+        $request->validate(
+            [
+                'title' => 'required',
+                'content' => 'required',
+                'category_id' => 'required'
+            ]
+        );
 
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->category_id = $request->input('category_id');
+        $post->user_id = rand(2,10);
+        $post->save();
+
+        return redirect()->route('posts.index')->with('success','Post creato con successo!');
     }
 
     public function update(Request $request, $id)

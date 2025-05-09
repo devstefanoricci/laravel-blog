@@ -32,7 +32,8 @@
                         <th scope="col">Body</th>
                         <th scope="col">Author</th>
                         <th scope="col">Cat</th>
-                        <th scope="col">Comments N</th>
+                        <th scope="col">Cmnts N</th>
+
                         <th scope="col">Created</th>
                         <th scope="col">Updated</th>
                         <th scope="col">Actions</th>
@@ -47,6 +48,7 @@
                             <td>{{ $post->user->email }}</td>
                             <td>{{ $post->category->name }}</td>
                             <td>{{ $post->comments->count() }}</td>
+
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
                             <td>
