@@ -68,9 +68,25 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return true;
+        return redirect()->route('posts.index')->with('success','Post cancellato con successo!');
 
     }
 
+    public function trashed()
+    {
+        $posts = Post::onlyTrashed()->paginate(10);
+        return view('posts.trashed', ['posts' => $posts]);
+
+    }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->restore($id);
+
+        //return $posts;
+        return redirect()->route('posts.show', $post->id)->with('success','Post ripristinato con successo!');
+
+    }
 
 }

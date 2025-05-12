@@ -30,6 +30,10 @@
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Body</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Cat</th>
+                        <th scope="col">Cmnts N</th>
+
                         <th scope="col">Created</th>
                         <th scope="col">Updated</th>
                         <th scope="col">Actions</th>
@@ -40,15 +44,27 @@
                         <tr>
                             <td>{{ $post->id }}</td>
                             <td><a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a></td>
-                            <td>{{ $post->body }}</td>
+                            <td>{{ $post->content }}</td>
+                            <td>{{ $post->user->email }}</td>
+                            <td>{{ $post->category->name }}</td>
+                            <td>{{ $post->comments->count() }}</td>
+
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
                             <td>
-                                <form action="{{ route('posts.restore', $post->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-success btn-sm">Ripristina</button>
-                                </form>
+                                <div class="row">
+
+
+                                <div class="col-auto">
+                                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Show</a>
+                                    <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-secondary">Edit</a>
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
