@@ -20,8 +20,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth','verified'])->name('home');
 
 Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    return view('auth.verify');
+})->middleware('auth')->name('verification.resend');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -36,13 +36,14 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 Route::prefix('posts')->group(function () {
-    Route::get('/index',  [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
-    Route::get('/create',  [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
-    Route::post('/posts',  [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
-    Route::get('/{id}',  [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
-    Route::get('/{id}/edit',  [App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit');
-    Route::put('/{id}',  [App\Http\Controllers\PostController::class, 'update'])->name('posts.update');
-    Route::delete('/{id}',  [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('/index',  [App\Http\Controllers\PostController::class, 'index'])->name('posts.index')->middleware(['auth']);
+    Route::get('/create',  [App\Http\Controllers\PostController::class, 'create'])->name('posts.create')->middleware(['auth']);
+    Route::post('/posts',  [App\Http\Controllers\PostController::class, 'store'])->name('posts.store')->middleware(['auth']);
+    Route::get('/{id}',  [App\Http\Controllers\PostController::class, 'show'])->name('posts.show')->middleware(['auth']);
+    Route::get('/{id}/edit',  [App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit')->middleware(['auth']);
+    Route::put('/{id}',  [App\Http\Controllers\PostController::class, 'update'])->name('posts.update')->middleware(['auth']);
+    Route::delete('/{id}',  [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy')->middleware(['auth']);
+    Route::post('/',  [App\Http\Controllers\PostController::class, 'trashed'])->name('posts.trashed')->middleware(['auth']);
 });
 
 Route::prefix('categories')->group(function () {
