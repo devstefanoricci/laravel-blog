@@ -20,7 +20,7 @@ class PostController extends Controller
     {
 
         $post = \App\Models\Post::findOrFail($id);
-        return response()->json($post);
+        return view('posts.show', ['post'=> $post]);
 
     }
 
@@ -49,6 +49,13 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->route('posts.index')->with('success','Post creato con successo!');
+    }
+
+    public function edit($id)
+    {
+        $categories = Category::all();
+        $post = \App\Models\Post::findOrFail($id);
+        return view('posts.edit', ['categories' => $categories, 'post' => $post]);
     }
 
     public function update(Request $request, $id)
