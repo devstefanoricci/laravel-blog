@@ -41,11 +41,11 @@ Route::prefix('posts')->middleware(['auth'])->group(function () {
     Route::put('/restore/{id}', [PostController::class, 'restore'])->name('posts.restore');
     Route::get('/create',  [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
     Route::post('/posts',  [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
-    Route::get('/{id}',  [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
-    Route::get('/{id}/edit',  [App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit');
-    Route::put('/{id}',  [App\Http\Controllers\PostController::class, 'update'])->name('posts.update');
-    Route::delete('/{id}',  [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
-    Route::get('/posts/search',  [App\Http\Controllers\PostController::class, 'search'])->name('posts.search');
+    Route::get('/show/{id}',  [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+    Route::get('/edit/{id}',  [App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/update/{id}',  [App\Http\Controllers\PostController::class, 'update'])->name('posts.update');
+    Route::delete('/delete/{id}',  [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('/search',  [App\Http\Controllers\PostController::class, 'search'])->name('posts.search');
 
 });
 

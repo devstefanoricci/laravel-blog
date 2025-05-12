@@ -18,6 +18,7 @@
                         @endif
                         <form method="POST" action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="mb">
                                 <label for="exampleFormControlInput1" class="form-label">Categories</label>
                                 <select class="form-select" aria-label="Default select example" name="category_id" onselect="">

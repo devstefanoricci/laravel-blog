@@ -45,7 +45,7 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->category_id = $request->input('category_id');
-        $post->user_id = rand(2,10);
+        $post->user_id = auth()->user()->id;
         $post->save();
 
         return redirect()->route('posts.index')->with('success','Post creato con successo!');
@@ -60,6 +60,23 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate(
+            [
+                'title' => 'required',
+                'content' => 'required',
+                'category_id' => 'required'
+            ]
+        );
+
+        $post = Post::findOrFail($id);
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->category_id = $request->input('category_id');
+        $post->user_id = auth()->user()->id;
+        $post->save();
+
+        return redirect()->route('posts.index')->with('success','Post modificato con successo!');
+
 
     }
 
