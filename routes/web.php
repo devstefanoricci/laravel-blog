@@ -35,16 +35,17 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 
-Route::prefix('posts')->group(function () {
-    Route::get('/index',  [App\Http\Controllers\PostController::class, 'index'])->name('posts.index')->middleware(['auth']);
-    Route::get('/trashed',  [App\Http\Controllers\PostController::class, 'trashed'])->name('posts.trashed')->middleware(['auth']);
-    Route::put('/restore/{id}', [PostController::class, 'restore'])->name('posts.restore')->middleware(['auth']);
-    Route::get('/create',  [App\Http\Controllers\PostController::class, 'create'])->name('posts.create')->middleware(['auth']);
-    Route::post('/posts',  [App\Http\Controllers\PostController::class, 'store'])->name('posts.store')->middleware(['auth']);
-    Route::get('/{id}',  [App\Http\Controllers\PostController::class, 'show'])->name('posts.show')->middleware(['auth']);
-    Route::get('/{id}/edit',  [App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit')->middleware(['auth']);
-    Route::put('/{id}',  [App\Http\Controllers\PostController::class, 'update'])->name('posts.update')->middleware(['auth']);
-    Route::delete('/{id}',  [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy')->middleware(['auth']);
+Route::prefix('posts')->middleware(['auth'])->group(function () {
+    Route::get('/index',  [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+    Route::get('/trashed',  [App\Http\Controllers\PostController::class, 'trashed'])->name('posts.trashed');
+    Route::put('/restore/{id}', [PostController::class, 'restore'])->name('posts.restore');
+    Route::get('/create',  [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts',  [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
+    Route::get('/{id}',  [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+    Route::get('/{id}/edit',  [App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/{id}',  [App\Http\Controllers\PostController::class, 'update'])->name('posts.update');
+    Route::delete('/{id}',  [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('/posts/search',  [App\Http\Controllers\PostController::class, 'search'])->name('posts.search');
 
 });
 

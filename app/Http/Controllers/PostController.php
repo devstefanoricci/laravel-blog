@@ -89,4 +89,20 @@ class PostController extends Controller
 
     }
 
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'search' => 'required|string|max:30',
+        ]);
+
+        $posts = Post::where('title','like','%' . $request->input('search') . '%')->paginate();
+
+        if ($posts->count() > 0) {
+            return view('posts.index', ['posts' => $posts])->with('success', 'Risultati trovati');
+        }
+
+        return redirect()->back()->with('danger', 'Nessun risultato');
+    }
+
 }

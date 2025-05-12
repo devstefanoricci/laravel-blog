@@ -38,7 +38,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('posts.trashed')}}">Trashed</a>
                           </li>
+                          <li>
+                            <form class="d-flex" role="search" action="{{route('posts.search')}}" method="GET">
+                                <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search"/>
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                              </form>
+                          </li>
                     </ul>
+
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
 
